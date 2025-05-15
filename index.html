@@ -18,13 +18,23 @@
 
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
+    let didHide = false;
+
     if (isIOS) {
-      // Try to open the app
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') {
+          didHide = true;
+        }
+      });
+
+      // Attempt to open the app
       window.location = appUrl;
 
-      // If app not installed, fallback to App Store after 1.5s
+      // Fallback after delay **only if** page wasn’t hidden (i.e. app didn’t open)
       setTimeout(() => {
-        window.location = fallbackUrl;
+        if (!didHide) {
+          window.location = fallbackUrl;
+        }
       }, 1500);
     } else {
       // Non-iOS fallback

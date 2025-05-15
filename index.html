@@ -4,31 +4,30 @@
   <meta charset="UTF-8" />
   <title>Opening OnlyScans...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Optional: Show Smart App Banner on iOS Safari -->
   <meta name="apple-itunes-app" content="app-id=6744573299">
 </head>
 <body>
   <p style="text-align:center;margin-top:2rem;font-family:sans-serif;">
-    Redirecting to the app...
+    Redirecting to OnlyScans...
   </p>
 
   <script>
-    // Parse URL query parameters
-    const params = new URLSearchParams(window.location.search);
-    const file = encodeURIComponent(params.get("file") || "");
-    const contentType = encodeURIComponent(params.get("contentType") || "");
-
-    // Build custom scheme deep link
-    const deepLink = `onlyscans://scan?file=${file}&contentType=${contentType}`;
-
-    // Redirect to custom scheme
-    window.location = deepLink;
-
-    // Fallback to App Store after 1.5s
-    setTimeout(() => {
+    // Check if this is an iOS device
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    
+    // If on iOS, we assume Universal Links will handle opening the app if installed
+    // If not installed, the meta tag will show the app banner
+    if (!isIOS) {
+      // For non-iOS devices, go directly to App Store
       window.location = "https://apps.apple.com/app/id6744573299";
-    }, 1500);
+    }
+    
+    // Optional: Add a delayed redirect to App Store as ultimate fallback
+    setTimeout(() => {
+      if (isIOS && !document.hidden) {
+        window.location = "https://apps.apple.com/app/id6744573299";
+      }
+    }, 2500);
   </script>
 </body>
 </html>

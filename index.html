@@ -2,41 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OnlyScans</title>
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      background-color: #ffffff;
-      text-align: center;
-    }
-    p {
-      font-weight: bold;
-      letter-spacing: -0.04em;
-      font-size: 1.2rem;
-      margin: 0 0 1rem 0;
-    }
-    a {
-      font-size: 1rem;
-      color: #007aff;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <title>Opening OnlyScans...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Optional: Show Smart App Banner on iOS Safari -->
+  <meta name="apple-itunes-app" content="app-id=6744573299">
 </head>
 <body>
-  <p>Taking you to the App Store…</p>
-  If you're not redirected automatically, <a href="https://apps.apple.com/us/app/id6744573299">click here</a>
+  <p style="text-align:center;margin-top:2rem;font-family:sans-serif;">
+    Redirecting to the app...
+  </p>
+
   <script>
-    window.location = 'https://apps.apple.com/us/app/id6744573299';
+    // Parse URL query parameters
+    const params = new URLSearchParams(window.location.search);
+    const file = encodeURIComponent(params.get("file") || "");
+    const contentType = encodeURIComponent(params.get("contentType") || "");
+
+    // Build custom scheme deep link
+    const deepLink = `onlyscans://scan?file=${file}&contentType=${contentType}`;
+
+    // Redirect to custom scheme
+    window.location = deepLink;
+
+    // Fallback to App Store after 1.5s
+    setTimeout(() => {
+      window.location = "https://apps.apple.com/app/id6744573299";
+    }, 1500);
   </script>
 </body>
 </html>

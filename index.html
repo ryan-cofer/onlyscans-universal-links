@@ -3,16 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Redirecting to App Store…</title>
+  <title>OnlyScans</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #ffffff;
+      text-align: center;
+    }
+    p {
+      font-weight: bold;
+      letter-spacing: -0.04em;
+      font-size: 1.2rem;
+      margin: 0 0 1rem 0;
+    }
+    a {
+      font-size: 1rem;
+      color: #007aff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <p>Redirecting to the App Store…</p>
+  <p>Taking you to the App Store…</p>
+  <a href="https://apps.apple.com/us/app/id6744573299">If you're not redirected, click here</a>
   <script>
-    // Just send to App Store, no custom scheme
     window.location = 'https://apps.apple.com/us/app/id6744573299';
   </script>
 </body>
 </html>
-
-
-

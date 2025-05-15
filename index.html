@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>OnlyScans Redirect</title>
-  </head>
-  <body>
-    <h1>It works!</h1>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loading your scan...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <p>Redirecting…</p>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const file = urlParams.get('file');
+    const contentType = urlParams.get('contentType') || 'other';
+
+    const fallbackUrl = 'https://apps.apple.com/us/app/id6744573299';
+    const appUrl = `onlyscans://scan?file=${encodeURIComponent(file)}&fallback=${encodeURIComponent(fallbackUrl)}&contentType=${encodeURIComponent(contentType)}`;
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if (isIOS) {
+      // Try to open the app
+      window.location = appUrl;
+
+      // If app not installed, fallback to App Store after 1.5s
+      setTimeout(() => {
+        window.location = fallbackUrl;
+      }, 1500);
+    } else {
+      // Non-iOS fallback
+      window.location = fallbackUrl;
+    }
+  </script>
+</body>
 </html>

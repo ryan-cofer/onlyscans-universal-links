@@ -1,1 +1,41 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirecting to OnlyScans</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+  <p>Opening OnlyScans app…</p>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const file = urlParams.get('file');
+    const contentType = urlParams.get('contentType') || 'other';
+
+    const fallbackUrl = 'https://apps.apple.com/us/app/idYOUR_APP_ID';
+
+    // Build the custom URL scheme to open your app with parameters
+    const appUrl = `onlyscans://scan?file=${encodeURIComponent(file)}&contentType=${encodeURIComponent(contentType)}`;
+
+    let didHide = false;
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        didHide = true; // app opened, page hidden
+      }
+    });
+
+    // Try to open the app
+    window.location = appUrl;
+
+    // If app didn't open (page still visible after delay), redirect to App Store
+    setTimeout(() => {
+      if (!didHide) {
+        window.location = fallbackUrl;
+      }
+    }, 1500);
+  </script>
+</body>
+</html>

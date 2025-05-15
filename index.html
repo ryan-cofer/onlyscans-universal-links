@@ -1,37 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Opening OnlyScans...</title>
+  <meta charset="UTF-8">
+  <title>Open in OnlyScans</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Smart App Banner for iOS -->
   <meta name="apple-itunes-app" content="app-id=6744573299">
+  
+  <!-- Primary CSS -->
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      text-align: center;
+      padding: 2rem;
+      background-color: #f5f5f7;
+      color: #1d1d1f;
+    }
+    .loader {
+      margin: 2rem auto;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #0071e3;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
-  <p style="text-align:center;margin-top:2rem;font-family:sans-serif;">
-    Redirecting to OnlyScans...
-  </p>
+  <div class="loader"></div>
+  <h1>Opening OnlyScans...</h1>
+  <p>If the app doesn't open automatically, <a href="https://apps.apple.com/app/id6744573299">tap here to download it</a>.</p>
 
   <script>
-    // Check if this is an iOS device
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    // Debugging - log the incoming URL and user agent
+    console.log('Incoming URL:', window.location.href);
+    console.log('User Agent:', navigator.userAgent);
     
-    // If on iOS, we assume Universal Links will handle opening the app if installed
-    // If not installed, the meta tag will show the app banner
-    if (!isIOS) {
-      // For non-iOS devices, go directly to App Store
-      window.location = "https://apps.apple.com/app/id6744573299";
+    // Extract and preserve all query parameters
+    const preserveQueryParams = () => {
+      const params = new URLSearchParams(window.location.search);
+      return params.toString();
+    };
+    
+    // Strategy 1: Universal Link with hidden iframe trick
+    const tryUniversalLink = () => {
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = `https://links.onlyscansapp.com/?${preserveQueryParams()}`;
+      document.body.appendChild(iframe);
+      
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+        // If still here after 500ms, try custom scheme
+        tryCustomScheme();
+      }, 500);
+    };
+    
+    // Strategy 2: Custom URL scheme fallback
+    const tryCustomScheme = () => {
+      window.location.href = `onlyscans://scan?${preserveQueryParams()}`;
+      
+      setTimeout(() => {
+        // If still here after 1.5 seconds, final fallback
+        finalFallback();
+      }, 1500);
+    };
+    
+    // Final fallback: App Store
+    const finalFallback = () => {
+      // Redirect to App Store with campaign parameters
+      window.location.href = 'https://apps.apple.com/app/id6744573299?pt=118781028&ct=qr-fallback&mt=8';
+    };
+    
+    // Device detection
+    const isIOS = () => {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    };
+    
+    // Main flow
+    if (isIOS()) {
+      // On iOS, try Universal Link first
+      tryUniversalLink();
+    } else {
+      // On non-iOS, go directly to App Store
+      finalFallback();
     }
     
-    // Optional: Add a delayed redirect to App Store as ultimate fallback
+    // Additional fallback in case of early timeouts
     setTimeout(() => {
-      if (isIOS && !document.hidden) {
-        window.location = "https://apps.apple.com/app/id6744573299";
+      if (!document.hidden) {
+        finalFallback();
       }
-    }, 2500);
+    }, 3000);
   </script>
-  <script>
-// Log the user agent and full URL
-alert(`Scanner detected:\nUserAgent: ${navigator.userAgent}\nURL: ${window.location.href}`);
-</script>
+  
+  <!-- Optional: App Store Smart Banner fallback for older iOS -->
+  <script type="text/javascript">
+    if (navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
+      var appBanner = document.createElement('meta');
+      appBanner.name = 'apple-itunes-app';
+      appBanner.content = 'app-id=6744573299';
+      document.getElementsByTagName('head')[0].appendChild(appBanner);
+    }
+  </script>
 </body>
 </html>

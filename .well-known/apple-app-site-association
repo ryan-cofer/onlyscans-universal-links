@@ -4,7 +4,7 @@
     "details": [
       {
         "appID": "5AZDVSV3VD.com.bearbuiltlabs.OnlyScans",
-        "paths": ["/?file=*", "/?contentType=*"]
+        "paths": [ "/*", "/" ]
       }
     ]
   }

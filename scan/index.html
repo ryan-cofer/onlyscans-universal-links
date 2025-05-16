@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Opening OnlyScans...</title>
+</head>
+<body>
+  <p>Opening OnlyScans app...</p>
+
+  <script>
+    // Get the query string
+    const queryString = window.location.search;
+
+    // Parse fallback URL (for later redirect)
+    const params = new URLSearchParams(queryString);
+    const fallbackURL = params.get('fallback') || 'https://apps.apple.com/us/app/id6744573299';
+
+    // Build the deep link
+    const deepLink = 'onlyscans://' + queryString;
+
+    // Try to open the app
+    window.location.href = deepLink;
+
+    // Fallback to App Store if the app isn't installed
+    setTimeout(() => {
+      window.location.href = fallbackURL;
+    }, 1500); // You can increase this delay if needed
+  </script>
+</body>
+</html>

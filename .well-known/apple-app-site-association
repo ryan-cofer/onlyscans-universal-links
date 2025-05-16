@@ -4,15 +4,11 @@
         "details": [
             {
                 "appID": "5AZDVSV3VD.com.bearbuiltlabs.OnlyScans",
-                "paths": [
-                    "/scan",
-                    "/scan?*",
-                    "/scan/*"
-                ],
+                "paths": ["*"],
                 "components": [
                     {
-                        "/": "/scan",
-                        "comment": "Matches any URL whose path is /scan"
+                        "/": "/scan*",
+                        "comment": "Matches any URL whose path starts with /scan"
                     },
                     {
                         "/": "/scan",
@@ -24,8 +20,5 @@
                 ]
             }
         ]
-    },
-    "webcredentials": {
-        "apps": ["5AZDVSV3VD.com.bearbuiltlabs.OnlyScans"]
     }
 }

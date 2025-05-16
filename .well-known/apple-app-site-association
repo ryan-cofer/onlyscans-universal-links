@@ -1,11 +1,31 @@
 {
-  "applinks": {
-    "apps": [],
-    "details": [
-      {
-        "appID": "5AZDVSV3VD.com.bearbuiltlabs.OnlyScans",
-        "paths": [ "/scan", "/scan/*" ]
-      }
-    ]
-  }
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "5AZDVSV3VD.com.bearbuiltlabs.OnlyScans",
+                "paths": [
+                    "/scan",
+                    "/scan?*",
+                    "/scan/*"
+                ],
+                "components": [
+                    {
+                        "/": "/scan",
+                        "comment": "Matches any URL whose path is /scan"
+                    },
+                    {
+                        "/": "/scan",
+                        "query": {
+                            "file": "*"
+                        },
+                        "comment": "Matches any URL whose path is /scan and has a file query parameter"
+                    }
+                ]
+            }
+        ]
+    },
+    "webcredentials": {
+        "apps": ["5AZDVSV3VD.com.bearbuiltlabs.OnlyScans"]
+    }
 }

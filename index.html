@@ -1,36 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Open in OnlyScans</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="apple-itunes-app" content="app-id=6744573299">
-  <script>
-    // 1. Immediately try to open via Universal Link
-    function launchApp() {
-      // Hidden iframe technique
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = `https://links.onlyscansapp.com${window.location.search}`;
-      document.body.appendChild(iframe);
-      
-      setTimeout(() => {
-        document.body.removeChild(iframe);
-        // 2. Fallback to custom scheme
-        window.location.href = `onlyscans://scan${window.location.search}`;
-        
-        // 3. Final fallback to App Store
-        setTimeout(() => {
-          window.location.href = "https://apps.apple.com/app/id6744573299";
-        }, 1000);
-      }, 300);
-    }
-    
-    // Start immediately
-    launchApp();
-  </script>
-</head>
-<body>
-  <p>Opening OnlyScans...</p>
-</body>
-</html>
+<!-- index.html at links.onlyscansapp.com -->
+<script>
+  // Try to open the app
+  window.location = 'onlyscans://scan?file=000457...'
+
+  // Fallback to App Store if app is not opened after delay
+  setTimeout(function() {
+    window.location = 'https://apps.apple.com/us/app/id6744573299';
+  }, 1500);
+</script>

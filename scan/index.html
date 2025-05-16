@@ -27,10 +27,9 @@
 </head>
 <body>
   <h1>OnlyScans</h1>
-  <p>If you have the app installed, it should open automatically.</p>
-  <p>Otherwise, you can download it from the App Store.</p>
+  <p>If you're not automatically redirected, <a href="https://apps.apple.com/us/app/id6744573299">click here</a>.</p>
   
-  <a href="" id="appStore" class="button">Download OnlyScans</a>
+  <a href="https://apps.apple.com/us/app/id6744573299" id="appStore" class="button">Download OnlyScans</a>
   
   <script>
     // Get the query string params
@@ -40,7 +39,8 @@
     const fallbackURL = params.get('fallback') || 'https://apps.apple.com/us/app/id6744573299';
     document.getElementById('appStore').href = fallbackURL;
     
-    // No automatic redirects - let Universal Links handle app opening
+    // Immediate redirect to App Store
+    window.location.href = fallbackURL;
   </script>
 </body>
 </html>
